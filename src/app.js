@@ -1,0 +1,118 @@
+(function(){
+  'use strict';
+
+  const state = { solution:{grid:[],placed:[]}, user:[], active:{cells:[],dir:'across'}, startTs:0, timer:null, lastFocused:null };
+  const el = {
+    year: document.getElementById('year'),
+    grid: document.getElementById('gridContainer'),
+    cluesAcross: document.getElementById('cluesAcross'),
+    cluesDown: document.getElementById('cluesDown'),
+    newBtn: document.getElementById('newBtn'),
+    revealSquareBtn: document.getElementById('revealSquareBtn'),
+    revealWordBtn: document.getElementById('revealWordBtn'),
+    solveBtn: document.getElementById('solveBtn'),
+    checkBtn: document.getElementById('checkBtn'),
+    clearBtn: document.getElementById('clearBtn'),
+    timerText: document.getElementById('timerText'),
+    modal: document.getElementById('completionModal'),
+    closeModalBtn: document.getElementById('closeModalBtn'),
+    ctaLink: document.getElementById('ctaLink'),
+    statsText: document.getElementById('statsText')
+  };
+
+  function setYear(){ if (el.year) el.year.textContent=String(new Date().getFullYear()); }
+  function startTimer(){ stopTimer(); state.startTs=Date.now(); state.timer=setInterval(()=>{
+    const ms=Date.now()-state.startTs, m=Math.floor(ms/60000), s=Math.floor((ms%60000)/1000);
+    el.timerText.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  },1000); }
+  function stopTimer(){ if(state.timer) clearInterval(state.timer); }
+
+  function initUser(){ const n=state.solution.grid.length; state.user=Array.from({length:n},(_,r)=>Array.from({length:n},(_,c)=> state.solution.grid[r][c]===null?null:'' )); }
+
+  function focusCell(r,c){ const i=el.grid.querySelector(`input[data-row="${r}"][data-col="${c}"]`); if(i) i.focus(); state.lastFocused={row:r,col:c}; }
+
+  function wordPath(r,c,dir){ const g=state.solution.grid, n=g.length, out=[]; if(g[r][c]===null) return out; let rr=r,cc=c; const dr=dir==='down'?1:0, dc=dir==='across'?1:0;
+    while(rr-dr>=0 && cc-dc>=0 && g[rr-dr][cc-dc]!==null){ rr-=dr; cc-=dc; }
+    while(rr<n && cc<n && g[rr][cc]!==null){ out.push({row:rr,col:cc}); rr+=dr; cc+=dc; }
+    return out;
+  }
+
+  function highlight(r,c,dir){ state.active={ cells:wordPath(r,c,dir), dir };
+    el.grid.querySelectorAll('.cw-cell').forEach(w=>w.classList.remove('active'));
+    for(const cell of state.active.cells){ const input=el.grid.querySelector(`input[data-row="${cell.row}"][data-col="${cell.col}"]`); if(input) input.parentElement.classList.add('active'); }
+    state.lastFocused={row:r,col:c};
+  }
+
+  function renderGrid(){ el.grid.innerHTML=''; const table=window.Crossword.buildTable(state.solution.grid,state.solution.placed); el.grid.appendChild(table);
+    const inputs=el.grid.querySelectorAll('input[type="text"]');
+    inputs.forEach(input=>{
+      input.addEventListener('focus', (e)=>{ const t=e.target; const r=Number(t.dataset.row), c=Number(t.dataset.col); highlight(r,c,state.active.dir); });
+      input.addEventListener('input', (e)=>{ const t=e.target; const v=(t.value||'').replace(/[^a-zA-Z]/g,'').toUpperCase(); t.value=v; const r=Number(t.dataset.row), c=Number(t.dataset.col); state.user[r][c]=v; if(v.length===1){ const idx=state.active.cells.findIndex(x=>x.row===r&&x.col===c); const nxt=state.active.cells[idx+1]; if(nxt) focusCell(nxt.row,nxt.col); } });
+      input.addEventListener('keydown',(e)=>{
+        const t=e.target; const r=Number(t.dataset.row), c=Number(t.dataset.col);
+        if(e.key==='Tab'){ e.preventDefault(); state.active.dir= state.active.dir==='across'?'down':'across'; highlight(r,c,state.active.dir); return; }
+        if(e.key==='Backspace' && !t.value){ const idx=state.active.cells.findIndex(x=>x.row===r&&x.col===c); const prev=state.active.cells[idx-1]; if(prev){ e.preventDefault(); focusCell(prev.row,prev.col);} }
+        if(e.key==='ArrowUp'){ e.preventDefault(); focusCell(r-1,c);} if(e.key==='ArrowDown'){ e.preventDefault(); focusCell(r+1,c);} if(e.key==='ArrowLeft'){ e.preventDefault(); focusCell(r,c-1);} if(e.key==='ArrowRight'){ e.preventDefault(); focusCell(r,c+1);} 
+      });
+    });
+  }
+
+  function buildClues(){ const across=state.solution.placed.filter(p=>p.direction==='across').sort((a,b)=>a.number-b.number); const down=state.solution.placed.filter(p=>p.direction==='down').sort((a,b)=>a.number-b.number);
+    function render(ul,list){ ul.innerHTML=''; for(const p of list){ const li=document.createElement('li'); li.textContent=`${p.number}. ${p.clue} (${p.answer.length})`; li.addEventListener('click',()=>{ focusCell(p.row,p.col); highlight(p.row,p.col,p.direction); }); ul.appendChild(li);} }
+    render(el.cluesAcross, across); render(el.cluesDown, down);
+  }
+
+  function updateStats(){
+    const n=state.solution.grid.length; if(!n){ el.statsText.textContent=''; return; }
+    let blocks=0; for(let r=0;r<n;r++) for(let c=0;c<n;c++){ if(state.solution.grid[r][c]===null) blocks++; }
+    const words = state.solution.placed.length;
+    el.statsText.textContent = `Blocks: ${blocks} | Words: ${words}`;
+  }
+
+  function generate(){ const entries=(window.CrosswordData && window.CrosswordData.default) ? window.CrosswordData.default : [];
+    if(!entries.length){ el.grid.innerHTML = '<div class="placeholder">No data loaded.</div>'; return; }
+    const size = Math.max(11, Math.min(17, Math.ceil(entries.reduce((m,e)=>Math.max(m,(e.answer||'').length),0)+6)));
+    const {grid,placed} = window.Crossword.generate(entries, size);
+    state.solution.grid=grid; state.solution.placed=placed;
+    initUser(); renderGrid(); buildClues(); updateStats();
+    if (placed.length){ focusCell(placed[0].row, placed[0].col); highlight(placed[0].row, placed[0].col, placed[0].direction); }
+    startTimer();
+  }
+
+  function firstEmptyCell(){
+    for(const p of state.solution.placed){ for(const cell of p.cells){ const v=state.user[cell.row][cell.col]; if(!v){ return {row:cell.row, col:cell.col}; } } }
+    return null;
+  }
+
+  function ensureActive(){
+    if(state.active.cells && state.active.cells.length) return;
+    if(state.lastFocused){ state.active={ cells:wordPath(state.lastFocused.row,state.lastFocused.col,state.active.dir), dir:state.active.dir }; return; }
+    if(state.solution.placed.length){ const p=state.solution.placed[0]; state.active={ cells:p.cells.slice(), dir:p.direction }; }
+  }
+
+  function revealSquare(){
+    const active=document.activeElement; if(active && active.tagName==='INPUT'){ const r=Number(active.dataset.row), c=Number(active.dataset.col); const sol=state.solution.grid[r][c]; if(sol){ active.value=sol.toUpperCase(); state.user[r][c]=active.value; return; } }
+    if(state.lastFocused){ const r=state.lastFocused.row, c=state.lastFocused.col; const sol=state.solution.grid[r][c]; const input=el.grid.querySelector(`input[data-row="${r}"][data-col="${c}"]`); if(sol && input){ input.value=sol.toUpperCase(); state.user[r][c]=input.value; return; } }
+    const cell=firstEmptyCell(); if(cell){ const sol=state.solution.grid[cell.row][cell.col]; const input=el.grid.querySelector(`input[data-row="${cell.row}"][data-col="${cell.col}"]`); if(sol && input){ input.value=sol.toUpperCase(); state.user[cell.row][cell.col]=input.value; focusCell(cell.row,cell.col); } }
+  }
+
+  function revealWord(){ ensureActive(); if(!state.active.cells.length) return; for(const cell of state.active.cells){ const sol=state.solution.grid[cell.row][cell.col]; const input=el.grid.querySelector(`input[data-row="${cell.row}"][data-col="${cell.col}"]`); if(sol && input){ input.value=sol.toUpperCase(); state.user[cell.row][cell.col]=input.value; } } }
+
+  function solveAll(){
+    const n=state.solution.grid.length; if(!n) return;
+    for(let r=0;r<n;r++) for(let c=0;c<n;c++){
+      const sol=state.solution.grid[r][c]; if(sol){ const input=el.grid.querySelector(`input[data-row="${r}"][data-col="${c}"]`); if(input){ input.value=sol.toUpperCase(); state.user[r][c]=input.value; } }
+    }
+    stopTimer(); el.modal.classList.remove('hidden');
+  }
+
+  function clearAll(){ el.grid.querySelectorAll('input[type="text"]').forEach(i=>i.value=''); for(let r=0;r<state.user.length;r++) for(let c=0;c<state.user[r].length;c++) if(state.user[r][c]!==null) state.user[r][c]=''; }
+  function check(){ const res=window.Crossword.check(state.solution.grid,state.user); el.grid.querySelectorAll('.cw-cell').forEach(w=>w.classList.remove('error')); for(const wrong of res.incorrectCells){ const i=el.grid.querySelector(`input[data-row="${wrong.row}"][data-col="${wrong.col}"]`); if(i) i.parentElement.classList.add('error'); }
+    if(res.isComplete && res.isCorrect){ stopTimer(); el.modal.classList.remove('hidden'); }
+  }
+
+  function bind(){ el.newBtn.addEventListener('click', generate); el.revealSquareBtn.addEventListener('click', revealSquare); el.revealWordBtn.addEventListener('click', revealWord); el.solveBtn.addEventListener('click', solveAll); el.clearBtn.addEventListener('click', clearAll); el.checkBtn.addEventListener('click', check); el.closeModalBtn.addEventListener('click', ()=>el.modal.classList.add('hidden')); }
+
+  function init(){ setYear(); bind(); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
+})(); 

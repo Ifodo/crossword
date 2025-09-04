@@ -1,0 +1,80 @@
+/* Base */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color: #0f172a; background: #ffffff; }
+
+.container { width: 85vw; max-width: none; margin: 0 auto; padding: 0; }
+.hidden { display: none; }
+
+/* Header */
+.app-header { border-bottom: 1px solid #e2e8f0; background: #fff; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.logo { width: 56px; height: 56px; border-radius: 12px; background: rgba(2, 89, 64, 0.1); color: #025940; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; }
+.logo-img { width: 56px; height: 56px; object-fit: contain; border-radius: 12px; background: transparent; }
+.title { font-size: 18px; margin: 0; }
+.brand-name { color: #025940; }
+.toolbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.timer { color: #334155; font-size: 14px; margin-left: 8px; }
+.stats { color: #475569; font-size: 14px; margin-left: 8px; }
+
+/* Buttons */
+.btn { appearance: none; border: 1px solid #cbd5e1; background: #fff; color: #0f172a; padding: 8px 12px; border-radius: 8px; font-size: 14px; cursor: pointer; transition: box-shadow .15s ease, background .15s ease; text-decoration: none; }
+.btn:hover { box-shadow: 0 4px 12px rgba(2, 89, 64, 0.12); background: #f8fafc; text-decoration: none; }
+.btn:focus { text-decoration: none; }
+.btn:active { text-decoration: none; }
+.btn:visited { text-decoration: none; }
+.btn:disabled { opacity: .6; cursor: not-allowed; box-shadow: none; }
+.btn-primary { background: #025940; color: #fff; border-color: #025940; }
+.btn-primary:hover { background: #01402f; }
+
+/* Main */
+.main { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 20px 0; align-items: start; }
+@media (min-width: 960px) { .main { grid-template-columns: 2fr 1fr; } }
+
+.grid-wrap { display: flex; justify-content: center; }
+@media (min-width: 960px) { .grid-wrap { justify-content: flex-start; } }
+
+/* Crossword container auto size (reverted) */
+.grid-container { background: #fff; border: 4px solid #000; border-radius: 0; overflow: auto; max-width: 100%; }
+.placeholder { padding: 16px; font-size: 14px; color: #64748b; }
+
+/* Grid table */
+.cw-grid { width: 100%; border-collapse: collapse; user-select: none; }
+.cw-grid td { position: relative; }
+.cw-black { background: #000; border: 1px solid #000; width: 40px; height: 40px; }
+.cw-cell { background: #fff; border: 1px solid #94a3b8; width: 40px; height: 40px; display: grid; place-items: center; }
+.cw-cell input { width: 100%; height: 100%; text-align: center; font-weight: 700; font-size: 18px; text-transform: uppercase; border: none; outline: none; background: transparent; }
+.cw-number { position: absolute; top: 4px; left: 4px; font-size: 11px; color: #475569; font-weight: 600; }
+.cw-cell.active { outline: 2px solid #025940; outline-offset: -2px; background: #ecfdf5; }
+.cw-cell.error { background: #fee2e2; }
+
+/* Clues */
+.card { border: 1px solid #e2e8f0; border-radius: 12px; background: #fff; box-shadow: 0 10px 30px rgba(2, 89, 64, 0.06); }
+.card-header { border-bottom: 1px solid #e2e8f0; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
+.card-title { font-size: 14px; margin: 0; }
+.card-body { padding: 12px 16px; }
+
+/* Make clues panel sticky on desktop */
+@media (min-width: 960px) { .clues-wrap .card { position: sticky; top: 16px; } }
+
+.clues { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.clues-section h3 { font-size: 12px; color: #64748b; text-transform: uppercase; margin: 0 0 8px; }
+.clues-list { list-style: decimal; margin: 0; padding-left: 22px; display: grid; gap: 6px; max-height: 60vh; overflow: auto; }
+.clues-list li { font-size: 14px; color: #0f172a; cursor: pointer; }
+.clues-list li:hover { color: #025940; }
+.clue-active { color: #025940; font-weight: 700; }
+
+/* Footer */
+.app-footer { border-top: 1px solid #e2e8f0; background: #fff; }
+.footer-inner { padding: 16px 0; display: flex; align-items: center; justify-content: space-between; }
+.cta-link { color: #025940; text-decoration: none; }
+.cta-link:hover { text-decoration: underline; }
+
+/* Modal */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: grid; place-items: center; padding: 16px; }
+.modal.hidden { display: none; }
+.modal-dialog { width: 100%; max-width: 420px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+.modal-header { border-bottom: 1px solid #e2e8f0; padding: 12px 16px; }
+.modal-body { padding: 12px 16px; color: #334155; display: grid; gap: 10px; }
+.modal-actions { padding: 12px 16px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px; } 

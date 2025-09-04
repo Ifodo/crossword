@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IGetHouse Crossword</title>
+    <meta name="description" content="Crossword game for IGetHouse - Real Estate themes" />
+    <link rel="stylesheet" href="styles/app.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <img src="assets/logo.jpg" alt="IGetHouse" class="logo-img" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'logo',textContent:'IG'}))" />
+          <h1 class="title"><span class="brand-name">IGetHouse</span> Crossword</h1>
+        </div>
+        <div class="toolbar">
+          <button id="newBtn" class="btn">New</button>
+          <button id="revealSquareBtn" class="btn">Reveal square</button>
+          <button id="revealWordBtn" class="btn">Reveal word</button>
+          <button id="solveBtn" class="btn">Fill all</button>
+          <button id="checkBtn" class="btn btn-primary">Check</button>
+          <button id="clearBtn" class="btn">Clear</button>
+          <span class="timer"><strong>Time:</strong> <span id="timerText">00:00</span></span>
+          <span id="statsText" class="stats"></span>
+        </div>
+      </div>
+    </header>
+
+    <main class="container main">
+      <section class="grid-wrap">
+        <div id="gridContainer" class="grid-container">
+          <div class="placeholder">Select New to start.</div>
+        </div>
+      </section>
+
+      <section class="clues-wrap">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Clues</h2>
+          </div>
+          <div class="card-body">
+            <div class="clues">
+              <div class="clues-section">
+                <h3>Across</h3>
+                <ol id="cluesAcross" class="clues-list"></ol>
+              </div>
+              <div class="clues-section">
+                <h3>Down</h3>
+                <ol id="cluesDown" class="clues-list"></ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <div class="container footer-inner">
+        <p>© <span id="year"></span> Powered by <strong>IGetHouse</strong>.</p>
+        <a id="ctaFooter" href="https://igethouse.ng" class="cta-link" target="_blank" rel="noopener noreferrer">Find your dream home</a>
+      </div>
+    </footer>
+
+    <div id="completionModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="completionTitle">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h4 id="completionTitle">🎉 Congratulations!</h4>
+        </div>
+        <div class="modal-body">
+          <p>You completed the crossword. Want to see homes like these?</p>
+          <a id="ctaLink" href="https://igethouse.ng" target="_blank" rel="noopener noreferrer" class="btn btn-primary">🏡 View homes like these on IGetHouse</a>
+        </div>
+        <div class="modal-actions">
+          <button id="closeModalBtn" class="btn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="data/words.js"></script>
+    <script src="src/engine.js"></script>
+    <script src="src/app.js"></script>
+  </body>
+</html> 
