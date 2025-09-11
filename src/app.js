@@ -55,6 +55,7 @@
         if(e.key==='ArrowUp'){ e.preventDefault(); focusCell(r-1,c);} if(e.key==='ArrowDown'){ e.preventDefault(); focusCell(r+1,c);} if(e.key==='ArrowLeft'){ e.preventDefault(); focusCell(r,c-1);} if(e.key==='ArrowRight'){ e.preventDefault(); focusCell(r,c+1);} 
       });
     });
+    resizeToFit();
   }
 
   function buildClues(){ const across=state.solution.placed.filter(p=>p.direction==='across').sort((a,b)=>a.number-b.number); const down=state.solution.placed.filter(p=>p.direction==='down').sort((a,b)=>a.number-b.number);
@@ -69,12 +70,29 @@
     el.statsText.textContent = `Blocks: ${blocks} | Words: ${words}`;
   }
 
+  
+
+  function resizeToFit(){
+    const n = state.solution.grid.length; if(!n) return;
+    const wrap = document.querySelector('.grid-wrap'); if(!wrap || !el.grid) return;
+    const W = Math.max(0, wrap.clientWidth);
+    const H = Math.max(0, wrap.clientHeight);
+    const styles = getComputedStyle(el.grid);
+    const containerBorder = (parseFloat(styles.borderTopWidth)||0) + (parseFloat(styles.borderBottomWidth)||0);
+    const perCellW = (W - containerBorder - 2*n) / n;
+    const perCellH = (H - containerBorder - 2*n) / n;
+    let cell = Math.floor(Math.min(perCellW, perCellH));
+    cell = isFinite(cell) && cell > 0 ? cell : 12;
+    const clamped = Math.max(8, Math.min(cell, 64));
+    el.grid.style.setProperty('--cell', `${clamped}px`);
+  }
+
   function generate(){ const entries=(window.CrosswordData && window.CrosswordData.default) ? window.CrosswordData.default : [];
     if(!entries.length){ el.grid.innerHTML = '<div class="placeholder">No data loaded.</div>'; return; }
     const size = Math.max(11, Math.min(17, Math.ceil(entries.reduce((m,e)=>Math.max(m,(e.answer||'').length),0)+6)));
     const {grid,placed} = window.Crossword.generate(entries, size);
     state.solution.grid=grid; state.solution.placed=placed;
-    initUser(); renderGrid(); buildClues(); updateStats();
+    initUser(); renderGrid(); buildClues(); updateStats(); resizeToFit();
     if (placed.length){ focusCell(placed[0].row, placed[0].col); highlight(placed[0].row, placed[0].col, placed[0].direction); }
     startTimer();
   }
@@ -113,6 +131,7 @@
 
   function bind(){ el.newBtn.addEventListener('click', generate); el.revealSquareBtn.addEventListener('click', revealSquare); el.revealWordBtn.addEventListener('click', revealWord); el.solveBtn.addEventListener('click', solveAll); el.clearBtn.addEventListener('click', clearAll); el.checkBtn.addEventListener('click', check); el.closeModalBtn.addEventListener('click', ()=>el.modal.classList.add('hidden')); }
 
-  function init(){ setYear(); bind(); }
+  function init(){ setYear(); bind(); resizeToFit(); }
+  window.addEventListener('resize', resizeToFit);
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })(); 

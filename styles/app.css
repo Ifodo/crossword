@@ -1,7 +1,7 @@
 /* Base */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
-body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color: #0f172a; background: #ffffff; }
+body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color: #0f172a; background: #ffffff; display: flex; flex-direction: column; }
 
 .container { width: 85vw; max-width: none; margin: 0 auto; padding: 0; }
 .hidden { display: none; }
@@ -30,7 +30,7 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 
 /* Main */
 .main { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 20px 0; align-items: start; }
-@media (min-width: 960px) { .main { grid-template-columns: 2fr 1fr; } }
+@media (min-width: 960px) { .main { grid-template-columns: 2fr 3fr; grid-template-rows: 1fr; } }
 
 .grid-wrap { display: flex; justify-content: center; }
 @media (min-width: 960px) { .grid-wrap { justify-content: flex-start; } }
@@ -42,10 +42,10 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 /* Grid table */
 .cw-grid { width: 100%; border-collapse: collapse; user-select: none; }
 .cw-grid td { position: relative; }
-.cw-black { background: #000; border: 1px solid #000; width: 40px; height: 40px; }
-.cw-cell { background: #fff; border: 1px solid #94a3b8; width: 40px; height: 40px; display: grid; place-items: center; }
-.cw-cell input { width: 100%; height: 100%; text-align: center; font-weight: 700; font-size: 18px; text-transform: uppercase; border: none; outline: none; background: transparent; }
-.cw-number { position: absolute; top: 4px; left: 4px; font-size: 11px; color: #475569; font-weight: 600; }
+.cw-black { background: #000; border: 1px solid #000; width: var(--cell); height: var(--cell); }
+.cw-cell { background: #fff; border: 1px solid #94a3b8; width: var(--cell); height: var(--cell); display: grid; place-items: center; }
+.cw-cell input { width: 100%; height: 100%; text-align: center; font-weight: 700; font-size: calc(var(--cell) * 0.5); text-transform: uppercase; border: none; outline: none; background: transparent; }
+.cw-number { position: absolute; top: 4px; left: 4px; font-size: calc(var(--cell) * 0.28); color: #475569; font-weight: 600; }
 .cw-cell.active { outline: 2px solid #025940; outline-offset: -2px; background: #ecfdf5; }
 .cw-cell.error { background: #fee2e2; }
 
@@ -59,6 +59,7 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 @media (min-width: 960px) { .clues-wrap .card { position: sticky; top: 16px; } }
 
 .clues { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 960px) { .clues { grid-template-columns: 1fr 1fr; } }
 .clues-section h3 { font-size: 12px; color: #64748b; text-transform: uppercase; margin: 0 0 8px; }
 .clues-list { list-style: decimal; margin: 0; padding-left: 22px; display: grid; gap: 6px; max-height: 60vh; overflow: auto; }
 .clues-list li { font-size: 14px; color: #0f172a; cursor: pointer; }
@@ -67,7 +68,8 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 
 /* Footer */
 .app-footer { border-top: 1px solid #e2e8f0; background: #fff; }
-.footer-inner { padding: 16px 0; display: flex; align-items: center; justify-content: space-between; }
+.footer-inner { padding: 8px 0; display: flex; align-items: center; justify-content: space-between; font-size: 13px; line-height: 1.2; }
+.footer-inner p { margin: 0; }
 .cta-link { color: #025940; text-decoration: none; }
 .cta-link:hover { text-decoration: underline; }
 
@@ -77,4 +79,7 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 .modal-dialog { width: 100%; max-width: 420px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
 .modal-header { border-bottom: 1px solid #e2e8f0; padding: 12px 16px; }
 .modal-body { padding: 12px 16px; color: #334155; display: grid; gap: 10px; }
-.modal-actions { padding: 12px 16px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px; } 
+.modal-actions { padding: 12px 16px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px; }
+
+/* Full-height clues panel overrides removed to restore page scroll */
+/* (intentionally left blank) */ 
