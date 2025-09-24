@@ -119,18 +119,68 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 .completion-dialog .modal-actions { justify-content: space-between; }
 
 /* Welcome Modal Specific Styles */
-.welcome-dialog { max-width: 380px; }
-.welcome-dialog .modal-header { background: #025940; color: white; text-align: center; padding: 10px 16px; }
-.welcome-dialog .modal-body { text-align: center; padding: 16px; }
-.welcome-dialog h5 { color: #025940; font-size: 1.3em; margin: 0; }
-.welcome-dialog .category-highlights { background: #f8fafc; border-radius: 8px; padding: 12px; margin: 12px 0; }
-.welcome-dialog h6 { color: #475569; margin: 0 0 8px 0; font-size: 0.9em; }
-.prize-categories { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
-.prize-categories li { color: #0f172a; font-size: 0.95em; }
-.prize-note { color: #025940; font-weight: 600; font-size: 0.9em; }
-.time-limit { background: #fef2f2; color: #991b1b; padding: 8px; border-radius: 6px; margin-top: 8px; font-size: 0.9em; }
-.welcome-dialog .modal-actions { justify-content: center; padding: 12px; }
-.welcome-dialog .btn-primary { font-size: 1.1em; padding: 10px 24px; }
+.welcome-dialog { 
+  max-width: 600px; 
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 0;
+}
+.welcome-content {
+  display: flex;
+  align-items: stretch;
+  min-height: 140px;
+}
+.welcome-left {
+  flex: 1;
+  background: #025940;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.welcome-left h4 {
+  margin: 0;
+  font-size: 1.4em;
+  margin-bottom: 8px;
+}
+.prize-highlight {
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+.prize-text {
+  margin: 0;
+  font-size: 0.95em;
+  line-height: 1.3;
+}
+.welcome-right {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+.category-preview {
+  display: flex;
+  gap: 12px;
+  font-size: 0.9em;
+  color: #475569;
+}
+.category-preview span {
+  background: #f8fafc;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.welcome-dialog .btn-primary {
+  font-size: 1em;
+  padding: 8px 24px;
+  margin-top: 4px;
+}
 
 /* Full-height clues panel overrides removed to restore page scroll */
 /* (intentionally left blank) */ 

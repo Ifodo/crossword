@@ -93,28 +93,21 @@
 
     <div id="welcomeModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
       <div class="modal-dialog welcome-dialog">
-        <div class="modal-header">
-          <h4 id="welcomeTitle">🎮 Welcome to IGetHouse Crossword!</h4>
-        </div>
-        <div class="modal-body">
-          <h5>🏆 Win Amazing Prizes!</h5>
-          <p>Test your real estate knowledge and stand a chance to win exciting prizes!</p>
-          <div class="category-highlights">
-            <h6>Choose from our exciting categories:</h6>
-            <ul class="prize-categories">
-              <li>🏠 Property Types</li>
-              <li>📈 Real Estate Terms</li>
-              <li>👥 Real Estate Professionals</li>
-              <li>And more!</li>
-            </ul>
+        <div class="welcome-content">
+          <div class="welcome-left">
+            <h4 id="welcomeTitle">🎮 Play & Win!</h4>
+            <div class="prize-highlight">
+              <p class="prize-text">🏆 Complete in 5 minutes to win amazing prizes!</p>
+            </div>
           </div>
-          <p class="prize-note">Complete puzzles to earn points and qualify for prizes!</p>
-          <div class="time-limit">
-            ⏱️ Complete puzzles within 5 minutes to be eligible for prizes
+          <div class="welcome-right">
+            <div class="category-preview">
+              <span>🏠 Property</span>
+              <span>📈 Terms</span>
+              <span>👥 People</span>
+            </div>
+            <button id="startPlayingBtn" class="btn btn-primary">Start Playing!</button>
           </div>
-        </div>
-        <div class="modal-actions">
-          <button id="startPlayingBtn" class="btn btn-primary">Start Playing!</button>
         </div>
       </div>
     </div>
