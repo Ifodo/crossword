@@ -133,9 +133,35 @@
     if(res.isComplete && res.isCorrect){ stopTimer(); el.modal.classList.remove('hidden'); }
   }
 
-  function bind(){ el.newBtn.addEventListener('click', generate); el.revealSquareBtn.addEventListener('click', revealSquare); el.revealWordBtn.addEventListener('click', revealWord); el.solveBtn.addEventListener('click', solveAll); el.clearBtn.addEventListener('click', clearAll); el.checkBtn.addEventListener('click', check); el.closeModalBtn.addEventListener('click', ()=>el.modal.classList.add('hidden')); }
+  function showWelcomeModal() {
+    const welcomeModal = document.getElementById('welcomeModal');
+    const startPlayingBtn = document.getElementById('startPlayingBtn');
+    
+    if (welcomeModal && startPlayingBtn) {
+      startPlayingBtn.addEventListener('click', () => {
+        welcomeModal.classList.add('hidden');
+        generate(); // Start a new game automatically
+      });
+    }
+  }
 
-  function init(){ setYear(); bind(); resizeToFit(); }
+  function bind(){ 
+    el.newBtn.addEventListener('click', generate); 
+    el.revealSquareBtn.addEventListener('click', revealSquare); 
+    el.revealWordBtn.addEventListener('click', revealWord); 
+    el.solveBtn.addEventListener('click', solveAll); 
+    el.clearBtn.addEventListener('click', clearAll); 
+    el.checkBtn.addEventListener('click', check); 
+    el.closeModalBtn.addEventListener('click', ()=>el.modal.classList.add('hidden')); 
+  }
+
+  function init(){ 
+    setYear(); 
+    bind(); 
+    resizeToFit(); 
+    showWelcomeModal(); // Show welcome modal on load
+  }
+  
   window.addEventListener('resize', resizeToFit);
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })(); 
