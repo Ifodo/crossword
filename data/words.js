@@ -93,4 +93,4 @@
 
   // Set default category
   window.CrosswordData.default = window.CrosswordData.propertyTypes;
-})();
+})(); 
