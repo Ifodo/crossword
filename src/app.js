@@ -125,7 +125,11 @@
     for(let r=0;r<n;r++) for(let c=0;c<n;c++){
       const sol=state.solution.grid[r][c]; if(sol){ const input=el.grid.querySelector(`input[data-row="${r}"][data-col="${c}"]`); if(input){ input.value=sol.toUpperCase(); state.user[r][c]=input.value; } }
     }
-    stopTimer(); el.modal.classList.remove('hidden');
+    stopTimer();
+    // When using Fill All, simulate a winning time (4 minutes) to show prize
+    const simulatedTimeInMinutes = 4;
+    updateCompletionModal(simulatedTimeInMinutes);
+    el.modal.classList.remove('hidden');
   }
 
   function clearAll(){ el.grid.querySelectorAll('input[type="text"]').forEach(i=>i.value=''); for(let r=0;r<state.user.length;r++) for(let c=0;c<state.user[r].length;c++) if(state.user[r][c]!==null) state.user[r][c]=''; }
