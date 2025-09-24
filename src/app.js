@@ -87,7 +87,11 @@
     el.grid.style.setProperty('--cell', `${clamped}px`);
   }
 
-  function generate(){ const entries=(window.CrosswordData && window.CrosswordData.default) ? window.CrosswordData.default : [];
+  function generate(){ 
+    const categorySelect = document.getElementById('categorySelect');
+    const selectedCategory = categorySelect ? categorySelect.value : 'default';
+    const entries = (window.CrosswordData && window.CrosswordData[selectedCategory]) ? window.CrosswordData[selectedCategory] : [];
+    
     if(!entries.length){ el.grid.innerHTML = '<div class="placeholder">No data loaded.</div>'; return; }
     const size = Math.max(11, Math.min(17, Math.ceil(entries.reduce((m,e)=>Math.max(m,(e.answer||'').length),0)+6)));
     const {grid,placed} = window.Crossword.generate(entries, size);
