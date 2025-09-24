@@ -129,8 +129,77 @@
   }
 
   function clearAll(){ el.grid.querySelectorAll('input[type="text"]').forEach(i=>i.value=''); for(let r=0;r<state.user.length;r++) for(let c=0;c<state.user[r].length;c++) if(state.user[r][c]!==null) state.user[r][c]=''; }
-  function check(){ const res=window.Crossword.check(state.solution.grid,state.user); el.grid.querySelectorAll('.cw-cell').forEach(w=>w.classList.remove('error')); for(const wrong of res.incorrectCells){ const i=el.grid.querySelector(`input[data-row="${wrong.row}"][data-col="${wrong.col}"]`); if(i) i.parentElement.classList.add('error'); }
-    if(res.isComplete && res.isCorrect){ stopTimer(); el.modal.classList.remove('hidden'); }
+  const PRIZES = [
+    "🎨 Personalised Home Décor Moodboard",
+    "🏠 'My Dream Home' AI Blueprint Generator",
+    "💰 Property Investment Starter Kit (Digital Pack + ₦50k Voucher)",
+    "👨‍🏫 1-on-1 Real Estate Coaching Session",
+    "📸 Free Photoshoot of Your New Home"
+  ];
+
+  function getRandomPrize() {
+    return PRIZES[Math.floor(Math.random() * PRIZES.length)];
+  }
+
+  function updateCompletionModal(timeInMinutes) {
+    const prizeText = document.getElementById('prizeText');
+    const contactInfo = document.getElementById('contactInfo');
+    const completionTitle = document.getElementById('completionTitle');
+    
+    if (timeInMinutes <= 5) {
+      const prize = getRandomPrize();
+      completionTitle.textContent = "🎉 Congratulations! You've Won!";
+      prizeText.innerHTML = `
+        <div class="prize-won">
+          <h5>Your Prize:</h5>
+          <p class="prize-name">${prize}</p>
+        </div>
+      `;
+      contactInfo.innerHTML = `
+        <div class="claim-info">
+          <h6>Claim Your Prize:</h6>
+          <p>Chat with any of our representatives:</p>
+          <div class="contact-details">
+            <div class="contact-person">
+              <strong>Bisola Salami</strong><br>
+              <a href="https://wa.me/2349165226722" target="_blank" class="whatsapp-link">
+                📱 +234 916 522 6722
+              </a>
+            </div>
+            <div class="contact-person">
+              <strong>Olayinka Okunola</strong><br>
+              <a href="https://wa.me/2348128532038" target="_blank" class="whatsapp-link">
+                📱 +234 812 853 2038
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      completionTitle.textContent = "👏 Well Done!";
+      prizeText.innerHTML = `
+        <div class="no-prize-message">
+          <p>Complete the puzzle within 5 minutes to win amazing prizes!</p>
+          <button onclick="location.reload()" class="btn btn-primary">Try Again</button>
+        </div>
+      `;
+      contactInfo.innerHTML = '';
+    }
+  }
+
+  function check(){ 
+    const res=window.Crossword.check(state.solution.grid,state.user); 
+    el.grid.querySelectorAll('.cw-cell').forEach(w=>w.classList.remove('error')); 
+    for(const wrong of res.incorrectCells){ 
+      const i=el.grid.querySelector(`input[data-row="${wrong.row}"][data-col="${wrong.col}"]`); 
+      if(i) i.parentElement.classList.add('error'); 
+    }
+    if(res.isComplete && res.isCorrect){ 
+      stopTimer(); 
+      const timeInMinutes = (Date.now() - state.startTs) / 60000;
+      updateCompletionModal(timeInMinutes);
+      el.modal.classList.remove('hidden'); 
+    }
   }
 
   function showWelcomeModal() {

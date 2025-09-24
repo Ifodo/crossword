@@ -72,16 +72,21 @@
     </footer>
 
     <div id="completionModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="completionTitle">
-      <div class="modal-dialog">
+      <div class="modal-dialog completion-dialog">
         <div class="modal-header">
           <h4 id="completionTitle">🎉 Congratulations!</h4>
         </div>
         <div class="modal-body">
-          <p>You completed the crossword. Want to see homes like these?</p>
-          <a id="ctaLink" href="https://igethouse.ng" target="_blank" rel="noopener noreferrer" class="btn btn-primary">🏡 View homes like these on IGetHouse</a>
+          <div id="prizeText"></div>
+          <div id="contactInfo"></div>
+          <div class="cta-section">
+            <p>Discover your dream home today!</p>
+            <a id="ctaLink" href="https://igethouse.ng" target="_blank" rel="noopener noreferrer" class="btn btn-primary">🏡 View homes on IGetHouse</a>
+          </div>
         </div>
         <div class="modal-actions">
           <button id="closeModalBtn" class="btn">Close</button>
+          <button onclick="location.reload()" class="btn btn-primary">Play Again</button>
         </div>
       </div>
     </div>
