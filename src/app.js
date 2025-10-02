@@ -165,7 +165,7 @@
           <p>Chat with any of our representatives:</p>
           <div class="contact-details">
             <div class="contact-person">
-              <strong>Bisola Salami</strong><br>
+              <strong>Madam Boro</strong><br>
               <a href="https://wa.me/2349165226722" target="_blank" class="whatsapp-link">
                 📱 +234 916 522 6722
               </a>
