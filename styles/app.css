@@ -18,25 +18,36 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 @media (min-width: 640px) { .logo { width: 56px; height: 56px; border-radius: 12px; font-size: 18px; } }
 .logo-img { width: 48px; height: 48px; object-fit: contain; border-radius: 10px; background: transparent; }
 @media (min-width: 640px) { .logo-img { width: 56px; height: 56px; border-radius: 12px; } }
-.title { font-size: 16px; margin: 0; }
-@media (min-width: 640px) { .title { font-size: 18px; } }
+.title { font-size: 18px; margin: 0; font-weight: 600; }
+@media (min-width: 640px) { .title { font-size: 18px; font-weight: normal; } }
 .brand-name { color: #025940; }
 .toolbar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; width: 100%; }
 @media (min-width: 640px) { .toolbar { gap: 8px; width: auto; } }
 .category-select {
   appearance: none;
-  background: #fff url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23025940'%3E%3Cpath d='M4 6h8l-4 4z'/%3E%3C/svg%3E") no-repeat right 8px center;
+  background: #fff url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%23025940'%3E%3Cpath d='M4 6h8l-4 4z'/%3E%3C/svg%3E") no-repeat right 12px center;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   color: #0f172a;
-  font-size: 14px;
-  padding: 10px 28px 10px 12px;
+  font-size: 16px;
+  padding: 14px 36px 14px 14px;
   cursor: pointer;
   transition: box-shadow .15s ease, background .15s ease;
-  min-height: 44px;
+  min-height: 52px;
   width: 100%;
+  font-weight: 500;
 }
-@media (min-width: 640px) { .category-select { width: auto; padding: 8px 28px 8px 12px; min-height: auto; } }
+@media (min-width: 640px) { 
+  .category-select { 
+    width: auto; 
+    padding: 8px 28px 8px 12px; 
+    min-height: auto; 
+    font-size: 14px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23025940'%3E%3Cpath d='M4 6h8l-4 4z'/%3E%3C/svg%3E");
+    background-position: right 8px center;
+    font-weight: normal;
+  } 
+}
 .category-select:hover {
   box-shadow: 0 4px 12px rgba(2, 89, 64, 0.12);
   background-color: #f8fafc;
@@ -46,14 +57,14 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
   border-color: #025940;
   box-shadow: 0 0 0 3px rgba(2, 89, 64, 0.1);
 }
-.timer { color: #334155; font-size: 13px; margin-left: 0; white-space: nowrap; }
-@media (min-width: 640px) { .timer { font-size: 14px; margin-left: 8px; } }
-.stats { color: #475569; font-size: 13px; margin-left: 0; white-space: nowrap; }
-@media (min-width: 640px) { .stats { font-size: 14px; margin-left: 8px; } }
+.timer { color: #334155; font-size: 15px; margin-left: 0; white-space: nowrap; font-weight: 500; }
+@media (min-width: 640px) { .timer { font-size: 14px; margin-left: 8px; font-weight: normal; } }
+.stats { color: #475569; font-size: 15px; margin-left: 0; white-space: nowrap; font-weight: 500; }
+@media (min-width: 640px) { .stats { font-size: 14px; margin-left: 8px; font-weight: normal; } }
 
 /* Buttons */
-.btn { appearance: none; border: 1px solid #cbd5e1; background: #fff; color: #0f172a; padding: 10px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; transition: box-shadow .15s ease, background .15s ease; text-decoration: none; min-height: 44px; touch-action: manipulation; -webkit-tap-highlight-color: transparent; white-space: nowrap; }
-@media (min-width: 640px) { .btn { padding: 8px 12px; font-size: 14px; min-height: auto; } }
+.btn { appearance: none; border: 1px solid #cbd5e1; background: #fff; color: #0f172a; padding: 14px 14px; border-radius: 10px; font-size: 15px; cursor: pointer; transition: box-shadow .15s ease, background .15s ease; text-decoration: none; min-height: 52px; touch-action: manipulation; -webkit-tap-highlight-color: transparent; white-space: nowrap; font-weight: 500; }
+@media (min-width: 640px) { .btn { padding: 8px 12px; font-size: 14px; min-height: auto; border-radius: 8px; font-weight: normal; } }
 .btn:hover { box-shadow: 0 4px 12px rgba(2, 89, 64, 0.12); background: #f8fafc; text-decoration: none; }
 .btn:focus { text-decoration: none; outline: 2px solid #025940; outline-offset: 2px; }
 .btn:active { text-decoration: none; transform: scale(0.98); }
@@ -67,7 +78,7 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 @media (min-width: 640px) { .main { gap: 20px; padding: 20px 0; } }
 @media (min-width: 960px) { .main { grid-template-columns: 2fr 3fr; grid-template-rows: 1fr; } }
 
-.grid-wrap { display: flex; justify-content: center; }
+.grid-wrap { display: flex; justify-content: center; align-items: flex-start; min-height: 0; }
 @media (min-width: 960px) { .grid-wrap { justify-content: flex-start; } }
 
 /* Crossword container auto size (reverted) */
@@ -80,9 +91,9 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 .cw-grid td { position: relative; }
 .cw-black { background: #000; border: 1px solid #000; width: var(--cell); height: var(--cell); min-width: var(--cell); min-height: var(--cell); }
 .cw-cell { background: #fff; border: 1px solid #94a3b8; width: var(--cell); height: var(--cell); min-width: var(--cell); min-height: var(--cell); display: grid; place-items: center; touch-action: manipulation; }
-.cw-cell input { width: 100%; height: 100%; text-align: center; font-weight: 700; font-size: calc(var(--cell) * 0.45); text-transform: uppercase; border: none; outline: none; background: transparent; -webkit-appearance: none; -moz-appearance: none; appearance: none; touch-action: manipulation; -webkit-text-size-adjust: 100%; }
-/* Prevent iOS zoom on input focus - minimum 16px font size */
-@media (max-width: 639px) { .cw-cell input { font-size: max(16px, calc(var(--cell) * 0.45)); } }
+.cw-cell input { width: 100%; height: 100%; text-align: center; font-weight: 700; font-size: calc(var(--cell) * 0.5); text-transform: uppercase; border: none; outline: none; background: transparent; -webkit-appearance: none; -moz-appearance: none; appearance: none; touch-action: manipulation; -webkit-text-size-adjust: 100%; }
+/* Prevent iOS zoom on input focus - minimum 18px font size for better readability on mobile */
+@media (max-width: 639px) { .cw-cell input { font-size: max(18px, calc(var(--cell) * 0.5)); } }
 @media (min-width: 640px) { .cw-cell input { font-size: calc(var(--cell) * 0.5); } }
 .cw-number { position: absolute; top: 2px; left: 3px; font-size: calc(var(--cell) * 0.24); color: #475569; font-weight: 600; line-height: 1; }
 @media (min-width: 640px) { .cw-number { top: 4px; left: 4px; font-size: calc(var(--cell) * 0.28); } }
@@ -91,25 +102,25 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 
 /* Clues */
 .card { border: 1px solid #e2e8f0; border-radius: 12px; background: #fff; box-shadow: 0 10px 30px rgba(2, 89, 64, 0.06); }
-.card-header { border-bottom: 1px solid #e2e8f0; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; }
+.card-header { border-bottom: 1px solid #e2e8f0; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; }
 @media (min-width: 640px) { .card-header { padding: 12px 16px; } }
-.card-title { font-size: 13px; margin: 0; }
-@media (min-width: 640px) { .card-title { font-size: 14px; } }
-.card-body { padding: 10px 12px; }
+.card-title { font-size: 18px; margin: 0; font-weight: 600; }
+@media (min-width: 640px) { .card-title { font-size: 14px; font-weight: normal; } }
+.card-body { padding: 14px 16px; }
 @media (min-width: 640px) { .card-body { padding: 12px 16px; } }
 
 /* Make clues panel sticky on desktop */
 @media (min-width: 960px) { .clues-wrap .card { position: sticky; top: 16px; } }
 
-.clues { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.clues { display: grid; grid-template-columns: 1fr; gap: 16px; }
 @media (min-width: 640px) { .clues { gap: 16px; } }
 @media (min-width: 960px) { .clues { grid-template-columns: 1fr 1fr; } }
-.clues-section h3 { font-size: 11px; color: #64748b; text-transform: uppercase; margin: 0 0 6px; }
-@media (min-width: 640px) { .clues-section h3 { font-size: 12px; margin: 0 0 8px; } }
-.clues-list { list-style: decimal; margin: 0; padding-left: 20px; display: grid; gap: 5px; max-height: 50vh; overflow: auto; -webkit-overflow-scrolling: touch; }
+.clues-section h3 { font-size: 15px; color: #64748b; text-transform: uppercase; margin: 0 0 10px; font-weight: 600; letter-spacing: 0.5px; }
+@media (min-width: 640px) { .clues-section h3 { font-size: 12px; margin: 0 0 8px; font-weight: normal; letter-spacing: normal; } }
+.clues-list { list-style: decimal; margin: 0; padding-left: 24px; display: grid; gap: 10px; max-height: 50vh; overflow: auto; -webkit-overflow-scrolling: touch; }
 @media (min-width: 640px) { .clues-list { padding-left: 22px; gap: 6px; max-height: 60vh; } }
-.clues-list li { font-size: 13px; color: #0f172a; cursor: pointer; padding: 2px 0; line-height: 1.4; }
-@media (min-width: 640px) { .clues-list li { font-size: 14px; padding: 0; } }
+.clues-list li { font-size: 16px; color: #0f172a; cursor: pointer; padding: 6px 0; line-height: 1.5; font-weight: 500; }
+@media (min-width: 640px) { .clues-list li { font-size: 14px; padding: 0; font-weight: normal; line-height: 1.4; } }
 .clues-list li:hover { color: #025940; }
 .clues-list li:active { color: #025940; transform: scale(0.98); }
 .clue-active { color: #025940; font-weight: 700; }

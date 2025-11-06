@@ -75,20 +75,30 @@
   function resizeToFit(){
     const n = state.solution.grid.length; if(!n) return;
     const wrap = document.querySelector('.grid-wrap'); if(!wrap || !el.grid) return;
-    const W = Math.max(0, wrap.clientWidth);
-    const H = Math.max(0, wrap.clientHeight);
+    const isMobile = window.innerWidth < 640;
+    const isTablet = window.innerWidth >= 640 && window.innerWidth < 960;
+    
+    // Get available space - use viewport height on mobile for better fit
+    let W = Math.max(0, wrap.clientWidth);
+    let H = isMobile ? window.innerHeight * 0.4 : Math.max(0, wrap.clientHeight);
+    
+    // If height is too small, use a calculated minimum
+    if (H < 200 && isMobile) {
+      H = Math.max(200, window.innerHeight * 0.35);
+    }
+    
     const styles = getComputedStyle(el.grid);
     const containerBorder = (parseFloat(styles.borderTopWidth)||0) + (parseFloat(styles.borderBottomWidth)||0);
     // Account for padding on mobile
-    const isMobile = window.innerWidth < 640;
-    const padding = isMobile ? 24 : 0;
+    const padding = isMobile ? 24 : (isTablet ? 16 : 0);
     const perCellW = (W - containerBorder - padding - 2*n) / n;
     const perCellH = (H - containerBorder - padding - 2*n) / n;
     let cell = Math.floor(Math.min(perCellW, perCellH));
     cell = isFinite(cell) && cell > 0 ? cell : 12;
-    // Minimum cell size for mobile touch targets (32px), desktop (8px)
-    const minSize = isMobile ? 32 : 8;
-    const maxSize = isMobile ? 48 : 64;
+    
+    // Minimum cell size for mobile touch targets (36px for better touch), tablet (28px), desktop (8px)
+    const minSize = isMobile ? 36 : (isTablet ? 28 : 8);
+    const maxSize = isMobile ? 52 : (isTablet ? 56 : 64);
     const clamped = Math.max(minSize, Math.min(cell, maxSize));
     el.grid.style.setProperty('--cell', `${clamped}px`);
   }
@@ -242,5 +252,8 @@
   }
   
   window.addEventListener('resize', resizeToFit);
+  window.addEventListener('orientationchange', function() {
+    setTimeout(resizeToFit, 100);
+  });
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })(); 
