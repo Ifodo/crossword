@@ -161,6 +161,15 @@
           <p class="prize-name">${prize}</p>
         </div>
       `;
+      
+      // Create WhatsApp message with prize information
+      const whatsappMessage = encodeURIComponent(
+        `Hello! I just completed the IGetHouse Crossword puzzle in under 5 minutes and won:\n\n${prize}\n\nI would like to claim my prize. Thank you!`
+      );
+      
+      const whatsappLink1 = `https://wa.me/2349165226722?text=${whatsappMessage}`;
+      const whatsappLink2 = `https://wa.me/2348128532038?text=${whatsappMessage}`;
+      
       contactInfo.innerHTML = `
         <div class="claim-info">
           <h6>Claim Your Prize:</h6>
@@ -168,13 +177,13 @@
           <div class="contact-details">
             <div class="contact-person">
               <strong>Miss Smart</strong><br>
-              <a href="https://wa.me/2349165226722" target="_blank" class="whatsapp-link">
+              <a href="${whatsappLink1}" target="_blank" class="whatsapp-link">
                 📱 +234 916 522 6722
               </a>
             </div>
             <div class="contact-person">
               <strong>Olayinka Okunola</strong><br>
-              <a href="https://wa.me/2348128532038" target="_blank" class="whatsapp-link">
+              <a href="${whatsappLink2}" target="_blank" class="whatsapp-link">
                 📱 +234 812 853 2038
               </a>
             </div>
