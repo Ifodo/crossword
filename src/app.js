@@ -79,11 +79,17 @@
     const H = Math.max(0, wrap.clientHeight);
     const styles = getComputedStyle(el.grid);
     const containerBorder = (parseFloat(styles.borderTopWidth)||0) + (parseFloat(styles.borderBottomWidth)||0);
-    const perCellW = (W - containerBorder - 2*n) / n;
-    const perCellH = (H - containerBorder - 2*n) / n;
+    // Account for padding on mobile
+    const isMobile = window.innerWidth < 640;
+    const padding = isMobile ? 24 : 0;
+    const perCellW = (W - containerBorder - padding - 2*n) / n;
+    const perCellH = (H - containerBorder - padding - 2*n) / n;
     let cell = Math.floor(Math.min(perCellW, perCellH));
     cell = isFinite(cell) && cell > 0 ? cell : 12;
-    const clamped = Math.max(8, Math.min(cell, 64));
+    // Minimum cell size for mobile touch targets (32px), desktop (8px)
+    const minSize = isMobile ? 32 : 8;
+    const maxSize = isMobile ? 48 : 64;
+    const clamped = Math.max(minSize, Math.min(cell, maxSize));
     el.grid.style.setProperty('--cell', `${clamped}px`);
   }
 
