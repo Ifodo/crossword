@@ -7,7 +7,6 @@
     grid: document.getElementById('gridContainer'),
     cluesAcross: document.getElementById('cluesAcross'),
     cluesDown: document.getElementById('cluesDown'),
-    newBtn: document.getElementById('newBtn'),
     revealSquareBtn: document.getElementById('revealSquareBtn'),
     revealWordBtn: document.getElementById('revealWordBtn'),
     checkBtn: document.getElementById('checkBtn'),
@@ -222,7 +221,6 @@
   }
 
   function bind(){ 
-    el.newBtn.addEventListener('click', generate); 
     el.revealSquareBtn.addEventListener('click', revealSquare); 
     el.revealWordBtn.addEventListener('click', revealWord); 
     el.clearBtn.addEventListener('click', clearAll); 
