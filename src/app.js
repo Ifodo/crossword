@@ -10,7 +10,6 @@
     newBtn: document.getElementById('newBtn'),
     revealSquareBtn: document.getElementById('revealSquareBtn'),
     revealWordBtn: document.getElementById('revealWordBtn'),
-    solveBtn: document.getElementById('solveBtn'),
     checkBtn: document.getElementById('checkBtn'),
     clearBtn: document.getElementById('clearBtn'),
     timerText: document.getElementById('timerText'),
@@ -136,18 +135,6 @@
 
   function revealWord(){ ensureActive(); if(!state.active.cells.length) return; for(const cell of state.active.cells){ const sol=state.solution.grid[cell.row][cell.col]; const input=el.grid.querySelector(`input[data-row="${cell.row}"][data-col="${cell.col}"]`); if(sol && input){ input.value=sol.toUpperCase(); state.user[cell.row][cell.col]=input.value; } } }
 
-  function solveAll(){
-    const n=state.solution.grid.length; if(!n) return;
-    for(let r=0;r<n;r++) for(let c=0;c<n;c++){
-      const sol=state.solution.grid[r][c]; if(sol){ const input=el.grid.querySelector(`input[data-row="${r}"][data-col="${c}"]`); if(input){ input.value=sol.toUpperCase(); state.user[r][c]=input.value; } }
-    }
-    stopTimer();
-    // When using Fill All, simulate a winning time (4 minutes) to show prize
-    const simulatedTimeInMinutes = 4;
-    updateCompletionModal(simulatedTimeInMinutes);
-    el.modal.classList.remove('hidden');
-  }
-
   function clearAll(){ el.grid.querySelectorAll('input[type="text"]').forEach(i=>i.value=''); for(let r=0;r<state.user.length;r++) for(let c=0;c<state.user[r].length;c++) if(state.user[r][c]!==null) state.user[r][c]=''; }
   const PRIZES = [
     "🎨 Personalised Home Décor Moodboard",
@@ -238,7 +225,6 @@
     el.newBtn.addEventListener('click', generate); 
     el.revealSquareBtn.addEventListener('click', revealSquare); 
     el.revealWordBtn.addEventListener('click', revealWord); 
-    el.solveBtn.addEventListener('click', solveAll); 
     el.clearBtn.addEventListener('click', clearAll); 
     el.checkBtn.addEventListener('click', check); 
     el.closeModalBtn.addEventListener('click', ()=>el.modal.classList.add('hidden')); 
