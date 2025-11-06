@@ -16,7 +16,8 @@
     modal: document.getElementById('completionModal'),
     closeModalBtn: document.getElementById('closeModalBtn'),
     ctaLink: document.getElementById('ctaLink'),
-    statsText: document.getElementById('statsText')
+    statsText: document.getElementById('statsText'),
+    categorySelect: document.getElementById('categorySelect')
   };
 
   function setYear(){ if (el.year) el.year.textContent=String(new Date().getFullYear()); }
@@ -103,8 +104,7 @@
   }
 
   function generate(){ 
-    const categorySelect = document.getElementById('categorySelect');
-    const selectedCategory = categorySelect ? categorySelect.value : 'default';
+    const selectedCategory = el.categorySelect ? el.categorySelect.value : 'default';
     const entries = (window.CrosswordData && window.CrosswordData[selectedCategory]) ? window.CrosswordData[selectedCategory] : [];
     
     if(!entries.length){ el.grid.innerHTML = '<div class="placeholder">No data loaded.</div>'; return; }
@@ -228,6 +228,9 @@
     el.clearBtn.addEventListener('click', clearAll); 
     el.checkBtn.addEventListener('click', check); 
     el.closeModalBtn.addEventListener('click', ()=>el.modal.classList.add('hidden')); 
+    if (el.categorySelect) {
+      el.categorySelect.addEventListener('change', generate);
+    }
   }
 
   function init(){ 
