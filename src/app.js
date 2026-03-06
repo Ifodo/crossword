@@ -173,7 +173,7 @@
       contactInfo.innerHTML = `
         <div class="claim-info">
           <h6>Claim Your Prize:</h6>
-          <p>Chat with any of our representatives:</p>
+          <p>Chat with any of our representatives to get more info about our properties</p>
           <div class="contact-details">
             <div class="contact-person">
               <strong>Miss Smart</strong><br>
