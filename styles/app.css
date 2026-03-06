@@ -1,7 +1,7 @@
 /* Base */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
-body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color: #0f172a; background: #ffffff; display: flex; flex-direction: column; }
+body { margin: 0; padding: 8px; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color: #0f172a; background: #ffffff; display: flex; flex-direction: column; }
 
 .container { width: 100%; max-width: 100%; margin: 0 auto; padding: 0 12px; }
 .hidden { display: none; }
@@ -22,7 +22,7 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 .logo-img { width: 56px; height: 56px; object-fit: contain; border-radius: 12px; background: transparent; }
 .title { font-size: 18px; margin: 0; }
 .brand-name { color: #025940; }
-.toolbar { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 8px; }
+.toolbar { display: grid; grid-template-columns: 1fr; align-items: center; gap: 8px; }
 .category-select {
   appearance: none;
   background: #fff url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23025940'%3E%3Cpath d='M4 6h8l-4 4z'/%3E%3C/svg%3E") no-repeat right 8px center;
@@ -47,6 +47,10 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 }
 .timer { color: #334155; font-size: 13px; margin-left: 0; grid-column: 1 / -1; }
 .stats { color: #475569; font-size: 13px; margin-left: 0; grid-column: 1 / -1; }
+
+@media (min-width: 420px) {
+  .toolbar { grid-template-columns: 1fr 1fr; }
+}
 
 @media (min-width: 640px) {
   .header-inner { padding: 14px 0; }
@@ -76,7 +80,7 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 @media (min-width: 768px) { .main { gap: 24px; } }
 @media (min-width: 960px) { .main { grid-template-columns: 2fr 3fr; grid-template-rows: 1fr; } }
 
-.grid-wrap { display: flex; justify-content: center; overflow-x: auto; }
+.grid-wrap { display: flex; justify-content: center; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 @media (min-width: 960px) { .grid-wrap { justify-content: flex-start; } }
 
 /* Crossword container auto size (reverted) */
@@ -84,7 +88,7 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 .placeholder { padding: 16px; font-size: 14px; color: #64748b; }
 
 /* Grid table */
-.cw-grid { width: 100%; border-collapse: collapse; user-select: none; }
+.cw-grid { width: auto; border-collapse: collapse; user-select: none; }
 .cw-grid td { position: relative; }
 .cw-black { background: #000; border: 1px solid #000; width: var(--cell); height: var(--cell); }
 .cw-cell { background: #fff; border: 1px solid #94a3b8; width: var(--cell); height: var(--cell); display: grid; place-items: center; }
@@ -94,6 +98,7 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI
 .cw-cell.error { background: #fee2e2; }
 
 @media (max-width: 420px) {
+  .grid-wrap { justify-content: flex-start; }
   .cw-number { top: 2px; left: 2px; }
 }
 
